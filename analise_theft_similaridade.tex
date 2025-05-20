@@ -1,0 +1,98 @@
+
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{caption}
+\geometry{a4paper, margin=2.5cm}
+
+\title{Análise de Similaridade Textual para Identificação de Crimes de Roubo em Registros Policiais}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introdução}
+
+O combate à criminalidade urbana permanece como um dos principais desafios enfrentados por autoridades e pesquisadores da área de segurança pública. Identificar e analisar delitos específicos, como o roubo, é essencial para compreender padrões, direcionar recursos de forma estratégica e desenvolver políticas eficazes. 
+
+Com os avanços no Processamento de Linguagem Natural (PLN) e em técnicas de aprendizado de máquina, modelos computacionais agora podem ser aplicados para auxiliar na identificação de crimes semelhantes com base em suas descrições textuais.
+
+\section{Objetivo do Estudo}
+
+Este estudo tem como propósito principal reconhecer e categorizar registros criminais relacionados ao roubo, tendo como foco a palavra-chave \textit{``theft''}, presente em descrições textuais de delitos. O método proposto emprega técnicas de similaridade textual para identificar descrições que sejam idênticas ou semanticamente próximas à palavra \textit{``theft''}, mesmo que o termo exato não esteja presente.
+
+\section{Metodologia e Implementação}
+
+Para atingir esse objetivo, foi desenvolvido um código em Python utilizando bibliotecas amplamente reconhecidas na ciência de dados e aprendizado de máquina, como \texttt{pandas}, \texttt{scikit-learn} e \texttt{tabulate}. O processo seguiu as seguintes etapas:
+
+\begin{itemize}
+    \item \textbf{Importação e validação dos dados:} O conjunto de dados foi carregado a partir do arquivo \texttt{major-crime-indicators.csv}, assegurando-se da presença das colunas essenciais \texttt{OFFENCE} e \texttt{MCI\_CATEGORY}.
+    \item \textbf{Pré-processamento textual:} As descrições de crimes na coluna \texttt{OFFENCE} foram padronizadas, com a remoção de valores nulos.
+    \item \textbf{Conversão de texto em vetores:} O modelo TF-IDF (\textit{Term Frequency-Inverse Document Frequency}) foi empregado para transformar as descrições em representações numéricas que refletem a importância relativa das palavras.
+    \item \textbf{Cálculo da similaridade:} A similaridade do cosseno foi utilizada para comparar a representação vetorial da palavra \textit{``theft''} com as demais descrições de crimes no conjunto de dados.
+    \item \textbf{Classificação dos resultados:}
+    \begin{itemize}
+        \item Correspondência exata (similaridade = 1.0), indicando descrições idênticas a \textit{``theft''}.
+        \item Alta similaridade (0.2 $\leq$ similaridade < 1.0), indicando descrições semanticamente próximas.
+    \end{itemize}
+    \item \textbf{Apresentação das análises:} Os resultados foram organizados em tabelas, destacando as descrições mais relevantes conforme a similaridade calculada.
+\end{itemize}
+
+\section{Resultados}
+
+\subsection{Ocorrências com Similaridade Total (1.0)}
+
+As descrições abaixo são idênticas à palavra-chave \textit{``theft''}, indicando registros diretamente associados a esse tipo de crime:
+
+\begin{table}[h!]
+\centering
+\caption{Descrições com similaridade total}
+\begin{tabular}{ll}
+\toprule
+\textbf{OFFENCE} & \textbf{MCI\_CATEGORY} \\
+\midrule
+Theft Over & Theft Over \\
+Theft Over & Theft Over \\
+Theft Over & Theft Over \\
+Theft Over & Theft Over \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Ocorrências com Alta Similaridade (0.2 $\leq$ similaridade < 1.0)}
+
+Embora não correspondam exatamente ao termo \textit{``theft''}, estas descrições compartilham um contexto semântico fortemente relacionado:
+
+\begin{table}[h!]
+\centering
+\caption{Descrições com alta similaridade semântica}
+\begin{tabular}{lll}
+\toprule
+\textbf{OFFENCE} & \textbf{MCI\_CATEGORY} & \textbf{Similaridade Coseno} \\
+\midrule
+Theft Of Motor Vehicle & Auto Theft & 0.5586 \\
+Theft From Motor Vehicle Over & Theft Over & 0.5586 \\
+Theft Over - Shoplifting & Theft Over & 0.3362 \\
+Theft Over - Bicycle & Theft Over & 0.2913 \\
+Theft Over - Distraction & Theft Over & 0.2875 \\
+Theft From Mail / Bag / Key & Theft Over & 0.2253 \\
+Theft Of Utilities Over & Theft Over & 0.2183 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Conclusão}
+
+A aplicação de técnicas de análise textual permitiu identificar com precisão as ocorrências criminais relacionadas ao roubo dentro do conjunto de dados analisado. A combinação do modelo TF-IDF com a similaridade do cosseno demonstrou-se eficaz tanto na detecção de descrições exatas quanto na identificação de variações semânticas associadas ao termo \textit{``theft''}.
+
+A abordagem apresentada pode ser expandida para investigações mais abrangentes, incorporando padrões espaciais, temporais e possíveis correlações entre diferentes tipos de delitos, contribuindo para estratégias mais eficientes de combate à criminalidade.
+
+\end{document}
